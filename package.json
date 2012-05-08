@@ -1,26 +1,26 @@
-{   
-  "name" : "nodetime", 
+{
+  "name" : "nodetime",
   "version" : "0.2.0",
   "description" : "Performance Profiler",
-  "author": "Dmitri Melikyan <dmitri@rapidlogix.com>", 
-  "homepage": "http://nodetime.com", 
+  "author": "Dmitri Melikyan <dmitri@rapidlogix.com>",
+  "homepage": "http://nodetime.com",
   "keywords": ["profiling", "instrumentation", "response time", "real-time", "performance", "bottlenecks"],
   "contributors": [
   ],
   "main": "./index.js",
-  "directories": { 
+  "directories": {
     "lib" : "./lib/nodetime"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dmelikyan/nodetime.git"
-  }, 
+    "url": "git://github.com/alphashack/nodetime.git"
+  },
   "optionalDependencies": {
     "timekit": "*"
   },
   "devDependencies": {
     "express": ">=2.5.0",
-    "socket.io": ">=0.9.0", 
+    "socket.io": ">=0.9.0",
     "redis": ">=0.7.0",
     "mongodb": ">=0.9.0",
     "mysql": ">=0.9.5",
@@ -30,10 +30,10 @@
     "cassandra-client": ">=0.9.1",
     "cassandra": ">=0.1.0"
   },
-  "engines": { 
-    "node" : ">=0.6.0" 
-  }, 
-  "licenses": [{ 
+  "engines": {
+    "node" : ">=0.6.0"
+  },
+  "licenses": [{
     "type": "MIT",
     "url": "http://github.com/dmelikyan/nodetime/raw/master/LICENSE"
   }]

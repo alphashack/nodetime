@@ -338,6 +338,24 @@ _tests.objectify_builds_one_child = function() {
     assert.equivalent({property:rootpayload,children:[{property:childpayload}]}, obj);
 };
 
+_tests.flatten_builds_one_child = function() {
+    // Arrange
+    var rootpayload = 'rootpayload';
+    var subject = new context(function() { return rootpayload; });
+    var childname = 'childname';
+    var childpayload = 'childpayload';
+    subject.enter(childname, function() { return childpayload; });
+    subject.leave();
+
+    var build = function(payload) { return { property: payload } };
+
+    // Act
+    var obj = subject.flatten(build);
+
+    // Assert
+    assert.equivalent([{name:'/',property:rootpayload},{name:'/'+childname,property:childpayload}], obj);
+};
+
 _tests.objectify_builds_multiple_child = function() {
     // Arrange
     var rootpayload = 'rootpayload';
@@ -384,6 +402,29 @@ _tests.objectify_builds_nested_child = function() {
     assert.equivalent({property:rootpayload,children:[{property:child1payload,children:[{property:child2payload},{property:child3payload}]}]}, obj);
 };
 
+_tests.flatten_builds_nested_child = function() {
+    // Arrange
+    var rootpayload = 'rootpayload';
+    var subject = new context(function() { return rootpayload; });
+    var child1payload = 'child1payload';
+    subject.enter('child1', function() { return child1payload; });
+    var child2payload = 'child2payload';
+    subject.enter('child2', function() { return child2payload; });
+    subject.leave();
+    var child3payload = 'child3payload';
+    subject.enter('child3', function() { return child3payload; });
+    subject.leave();
+    subject.leave();
+
+    var build = function(payload) { return { property: payload } };
+
+    // Act
+    var obj = subject.flatten(build);
+
+    // Assert
+    assert.equivalent([{name:'/',property:rootpayload},{name:'/child1',property:child1payload},{name:'/child1/child2',property:child2payload},{name:'/child1/child3',property:child3payload}], obj);
+};
+
 _tests.objectify_throws_if_not_at_root = function() {
     // Arrange
     var payload = new context();
@@ -394,6 +435,18 @@ _tests.objectify_throws_if_not_at_root = function() {
 
     // Act
     payload.objectify();
+};
+
+_tests.flatten_throws_if_not_at_root = function() {
+    // Arrange
+    var payload = new context();
+    payload.enter();
+
+    // Await
+    await.throw(_tests.flatten_throws_if_not_at_root, 'Context error: not at root when "flatten" called');
+
+    // Act
+    payload.flatten();
 };
 
 _tests.leave_throws_at_root = function() {
@@ -482,7 +535,6 @@ _tests.leave_throws_if_name_incorrect = function() {
     // Act
     subject.leave(notchild1);
 };
-
 
 _tests.leave_does_not_throw_if_name_not_specified = function() {
     // Arrange

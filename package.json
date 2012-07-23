@@ -28,7 +28,8 @@
     "memcached": ">=0.0.8",
     "memcache": ">=0.3.0",
     "cassandra-client": ">=0.9.1",
-    "cassandra": ">=0.1.0"
+    "cassandra": ">=0.1.0",
+    "underscore": "1.2.2"
   },
   "engines": {
     "node" : ">=0.6.0"
